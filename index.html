@@ -11,6 +11,11 @@
             return choices[(Math.floor(Math.random() * choices.length))];
         }
 
+        function getPlayerChoice() {
+            let selection = prompt("Rock, paper, or scissor?")
+            return selection.toLowerCase()
+        }
+
         function helper(player, computer) {
             if (player == computer) {
                 return "Tie! Go again!";
@@ -44,7 +49,6 @@
         }
 
         function playRound(playerSelection, computerSelection) {
-            playerSelection.toLowerCase()
             const result = helper(playerSelection, computerSelection)
             console.log("You have chosen " + playerSelection + ". The computer has chosen " + computerSelection + ".")
             console.log(result)
@@ -56,7 +60,7 @@
             let cpuScore = 0
 
             while (playerScore != 5 && cpuScore != 5) {
-                let playerChoice = ["rock", "paper", "scissor"][(Math.floor(Math.random() * 3))]
+                let playerChoice = getPlayerChoice()
                 let cpuChoice = getComputerChoice()
                 let result = playRound(playerChoice, cpuChoice)
 
@@ -71,8 +75,10 @@
             }
 
             if (playerScore == 5) {
+                alert("You won the game!")
                 return "You won the game!"
             } else if (cpuScore == 5) {
+                alert("You lost the game!")
                 return "You lost the game!"
             }
         }
