@@ -6,19 +6,36 @@
 </head>
 <body>
     <script>
+        const choices = ["rock", "paper", "scissor"]
+
         function getComputerChoice() {
-            let choices = ["rock", "paper", "scissor"]
-            return choices[(Math.floor(Math.random() * choices.length))];
+            return choices[(Math.floor(Math.random() * choices.length))]
         }
 
         function getPlayerChoice() {
             let selection = prompt("Rock, paper, or scissor?")
+
+            while (!isValidInput(selection)) {
+                selection = prompt("Invalid input. Try again.")
+            }
+
             return selection.toLowerCase()
+        }
+
+        function isValidInput(input) {
+            let isValid = false
+            for (let i = 0; i < choices.length; i++) {
+                if (input.toLowerCase() == choices[i]) {
+                    return true
+                }
+            }
+
+            return false
         }
 
         function helper(player, computer) {
             if (player == computer) {
-                return "Tie! Go again!";
+                return "Tie! Go again!"
             }
 
             switch (player) {
