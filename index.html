@@ -6,7 +6,78 @@
 </head>
 <body>
     <script>
-        
+        function getComputerChoice() {
+            let choices = ["rock", "paper", "scissor"]
+            return choices[(Math.floor(Math.random() * choices.length))];
+        }
+
+        function helper(player, computer) {
+            if (player == computer) {
+                return "Tie! Go again!";
+            }
+
+            switch (player) {
+                case "rock": 
+                    if (computer == "paper") {
+                        return "You lose! Paper beats rock!"
+                    } else if (computer == "scissor") {
+                        return "You win! Rock beats scissor!"
+                    }
+                    break;
+                case "paper": 
+                    if (computer == "scissor") {
+                            return "You lose! Scissor beats paper!"
+                        } else if (computer == "rock") {
+                            return "You win! Paper beats rock!"
+                        }
+                        break;
+                case "scissor": 
+                    if (computer == "paper") {
+                            return "You win! Scissor beats paper!"
+                        } else if (computer == "rock") {
+                            return "You lose! Rock beats scissor!"
+                        }
+                        break;
+                default:
+                    break;
+            }
+        }
+
+        function playRound(playerSelection, computerSelection) {
+            playerSelection.toLowerCase()
+            const result = helper(playerSelection, computerSelection)
+            console.log("You have chosen " + playerSelection + ". The computer has chosen " + computerSelection + ".")
+            console.log(result)
+            return result
+        }
+
+        function game() {
+            let playerScore = 0
+            let cpuScore = 0
+
+            while (playerScore != 5 && cpuScore != 5) {
+                let playerChoice = ["rock", "paper", "scissor"][(Math.floor(Math.random() * 3))]
+                let cpuChoice = getComputerChoice()
+                let result = playRound(playerChoice, cpuChoice)
+
+                if (result.includes("You win")) {
+                    playerScore++
+                } else if (result.includes("You lose")) {
+                    cpuScore++
+                }
+
+                console.log("You have " + playerScore + " point(s). The computer has " + cpuScore + " point(s).")
+
+            }
+
+            if (playerScore == 5) {
+                return "You won the game!"
+            } else if (cpuScore == 5) {
+                return "You lost the game!"
+            }
+        }
+
+        console.log(game())
     </script>
 </body>
 </html>
