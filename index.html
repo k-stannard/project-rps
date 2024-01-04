@@ -5,21 +5,66 @@
     <title>Rock Paper Scissors</title>
 </head>
 <body>
+    <style>
+        #result {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        button {
+            padding: 10px;
+            justify-content: center;
+            align-items: center;
+            
+        }
+
+        #wrapper {
+            display: flex;
+            padding: 10px;
+            justify-content: space-around;
+            margin-left: 300px;
+            margin-right: 300px;
+        }
+    </style>
+
+    <div id="wrapper">
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissor">Scissor</button>
+    </div>
+
+    <div id="result">
+        <h4>Results</h4>
+        <p id="game-log"></p>
+        <p id="round-result"></p>
+        <h4 id="score"></h4>
+    </div>
+
+
     <script>
         const choices = ["rock", "paper", "scissor"]
+        const log = document.getElementById('game-log')
+        const roundResult = document.getElementById('round-result')
+        const score = document.getElementById('score')
+        const wrapper = document.getElementById('wrapper')
+
+        let playerScore = 0
+        let cpuScore = 0
+
+        wrapper.addEventListener('click', (event) => {
+            const isButton = event.target.nodeName === 'BUTTON'
+            if(!isButton) {
+                return
+            }
+
+            game(event.target.id)
+        })
+            
 
         function getComputerChoice() {
             return choices[(Math.floor(Math.random() * choices.length))]
-        }
-
-        function getPlayerChoice() {
-            let selection = prompt("Rock, paper, or scissor?")
-
-            while (!isValidInput(selection)) {
-                selection = prompt("Invalid input. Try again.")
-            }
-
-            return selection.toLowerCase()
         }
 
         function isValidInput(input) {
@@ -67,17 +112,15 @@
 
         function playRound(playerSelection, computerSelection) {
             const result = helper(playerSelection, computerSelection)
-            console.log("You have chosen " + playerSelection + ". The computer has chosen " + computerSelection + ".")
-            console.log(result)
+            const roundMessage = `You have chosen ${playerSelection}. The computer has chosen ${computerSelection}.`
+            log.textContent = roundMessage
+            roundResult.textContent = result
             return result
         }
 
-        function game() {
-            let playerScore = 0
-            let cpuScore = 0
-
-            while (playerScore != 5 && cpuScore != 5) {
-                let playerChoice = getPlayerChoice()
+        function game(selection) {
+            if (playerScore != 5 && cpuScore != 5) {
+                let playerChoice = selection
                 let cpuChoice = getComputerChoice()
                 let result = playRound(playerChoice, cpuChoice)
 
@@ -87,19 +130,15 @@
                     cpuScore++
                 }
 
-                alert(result + ". \nYou have " + playerScore + " point(s). The computer has " + cpuScore + " point(s).")
+                score.textContent = `You have ${playerScore} point(s). The computer has ${cpuScore} point(s).`
             }
 
             if (playerScore == 5) {
                 alert("You won the game!")
-                return "You won the game!"
             } else if (cpuScore == 5) {
                 alert("You lost the game!")
-                return "You lost the game!"
             }
         }
-
-        console.log(game())
     </script>
 </body>
 </html>
